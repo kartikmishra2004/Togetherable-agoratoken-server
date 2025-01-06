@@ -4,7 +4,7 @@ const cors = require('cors');
 const { RtcTokenBuilder, RtcRole } = require('agora-access-token');
 
 const app = express();
-app.use(cors());
+app.options('/generate-token', cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
