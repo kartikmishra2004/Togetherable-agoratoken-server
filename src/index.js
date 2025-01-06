@@ -4,21 +4,17 @@ const cors = require('cors');
 const { RtcTokenBuilder, RtcRole } = require('agora-access-token');
 
 const app = express();
-
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://togetherable.vercel.app'],
+  origin: ['http://localhost:5173', 'https://togetherable.vercel.app'], // Allowed origins
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
   credentials: true,
 }));
-
 app.use(express.json());
 
-const PORT = process.env.PORT || 3001;
+const PORT = 3000;
 const APP_ID = process.env.AGORA_APP_ID;
 const APP_CERTIFICATE = process.env.AGORA_APP_CERTIFICATE;
-
-app.options('*', cors()); // Preflight response
 
 app.get('/', (req, res) => {
   res.json({ msg: 'Server is running!!' });
@@ -31,10 +27,12 @@ app.post('/generate-token', (req, res) => {
     return res.status(400).json({ error: 'Channel name is required' });
   }
 
+  // Set token expire time in seconds
   const expirationTimeInSeconds = 3600;
   const currentTimestamp = Math.floor(Date.now() / 1000);
   const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds;
 
+  // Build the token
   const token = RtcTokenBuilder.buildTokenWithUid(
     APP_ID,
     APP_CERTIFICATE,
@@ -44,7 +42,6 @@ app.post('/generate-token', (req, res) => {
     privilegeExpiredTs
   );
 
-  res.set('Access-Control-Allow-Origin', '*'); // Ensure this header is included
   return res.json({ token });
 });
 
