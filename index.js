@@ -7,7 +7,9 @@ const app = express();
 app.use(cors({
   origin: ['http://localhost:5173', 'https://togetherable.vercel.app'],
   credentials: true,
+  allowedHeaders: true
 }));
+
 app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
