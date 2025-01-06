@@ -6,19 +6,20 @@ const { RtcTokenBuilder, RtcRole } = require('agora-access-token');
 const app = express();
 app.use(cors({
   origin: ['http://localhost:5173', 'https://togetherable.vercel.app'],
-  credentials: true,
-  allowedHeaders: true
 }));
-
 app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
 const APP_ID = process.env.AGORA_APP_ID;
 const APP_CERTIFICATE = process.env.AGORA_APP_CERTIFICATE;
 
+app.get('/', (req, res) => {
+  res.json({ msg: 'Server is running!!' });
+});
+
 app.post('/generate-token', (req, res) => {
   const { channelName, uid } = req.body;
-  
+
   if (!channelName) {
     return res.status(400).json({ error: 'Channel name is required' });
   }
