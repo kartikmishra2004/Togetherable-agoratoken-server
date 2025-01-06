@@ -6,7 +6,7 @@ const { RtcTokenBuilder, RtcRole } = require('agora-access-token');
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:5173/call', 'https://togetherable.vercel.app'],
+  origin: ['http://localhost:5173', 'https://togetherable.vercel.app'],
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
   credentials: true,
